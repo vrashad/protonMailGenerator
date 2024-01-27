@@ -41,14 +41,18 @@ def getMail():
             text = ctypes.c_char_p(data_locked)
             value = text.value
             kernel32.GlobalUnlock(data_locked)
-            if "@dropmail.me" in str(value) or "@emltmp.com" in str(value) or "@spymail.one" in str(value) or "@10mail.org" in str(value):
-                match = re.search(r'[\w.+-]+@[\w-]+\.[\w.-]+', str(value))
+            # ---Старая версия---
+            # if "@dropmail.me" in str(value)  or "@10mail.org"  in str(value)  or "@yomail.info" in str(value): #
+            #     match = re.search(r'[\w.+-]+@[\w-]+\.[\w.-]+', str(value))
+            #     return str(match.group(0))
+            match = re.search(r'[\w.+-]+@[\w-]+\.[\w.-]+', str(value))
+            if "@dropmail.me" in str(match.group(0))  or "@yomail.info" in str(match.group(0)): #
                 return str(match.group(0))
             return False
     finally:
         user32.CloseClipboard()
 webbrowser.open('https://account.proton.me/signup?plan=free')
-time.sleep(5)
+time.sleep(10)
 
 
 
@@ -95,12 +99,12 @@ def randomize(
 
 # Username
 _username_=randomize('-s',5)+randomize('-s',5)+randomize('-s',5)
-pyautogui.typewrite(_username_ + '\t\t')
+pyautogui.typewrite(_username_ + '\t\t\t', interval=0.1)
 print("Username:" + _username_)
 
 # Password
 _password_=randomize('-p',16)
-pyautogui.typewrite(_password_+'\t'+_password_+'\t')
+pyautogui.typewrite(_password_+'\t'+_password_+'\t', interval=0.1)
 print("Password:" + _password_)
 
 pyautogui.typewrite('\n')
@@ -121,15 +125,20 @@ while True:
     if not newMail:
         pyautogui.keyDown('ctrlleft'); pyautogui.typewrite('r'); pyautogui.keyUp('ctrlleft')
         time.sleep(5)
-    pyautogui.typewrite('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t')
-    pyautogui.keyDown('ctrlleft')
-    pyautogui.keyDown('shiftleft')
-    pyautogui.keyDown('shiftright')
-    pyautogui.press('down')
-    pyautogui.keyUp('shiftleft')
-    pyautogui.keyUp('shiftright')
-    pyautogui.keyUp('ctrlleft')
-    pyautogui.keyDown('ctrlleft'); pyautogui.typewrite('c'); pyautogui.keyUp('ctrlleft')
+    # ---Старая версия---
+    #pyautogui.typewrite('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t')
+    # pyautogui.keyDown('ctrlleft')
+    # pyautogui.keyDown('shiftleft')
+    # pyautogui.keyDown('shiftright')
+    # pyautogui.press('down')
+    # pyautogui.keyUp('shiftleft')
+    # pyautogui.keyUp('shiftright')
+    # pyautogui.keyUp('ctrlleft')
+    # pyautogui.keyDown('ctrlleft'); pyautogui.typewrite('c'); pyautogui.keyUp('ctrlleft')
+    #--- ---
+    pyautogui.hotkey('ctrl', 'a')
+    pyautogui.hotkey('ctrl', 'c')
+    pyautogui.click(100, 100)
     newMail = getMail()
     if newMail:
         print("10 min mail: " + newMail)
@@ -138,8 +147,9 @@ while True:
 pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('\t'); pyautogui.keyUp('ctrlleft')
 time.sleep(1)
 #äpyautogui.typewrite(newMail)
-pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('v'); pyautogui.keyUp('ctrlleft')
-pyautogui.press('backspace')
+# pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('v'); pyautogui.keyUp('ctrlleft')  Старая версия
+pyautogui.typewrite(newMail, interval=0.1)
+#pyautogui.press('backspace')
 pyautogui.typewrite('\n')
 
 time.sleep(10)
@@ -151,7 +161,7 @@ time.sleep(1)
 
 #time.sleep(5)
 
-
+pyautogui.typewrite('\t')
 pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('a'); pyautogui.keyUp('ctrlleft')
 pyautogui.keyDown('ctrlleft'); pyautogui.typewrite('c'); pyautogui.keyUp('ctrlleft')
 
